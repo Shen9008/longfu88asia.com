@@ -1,0 +1,63 @@
+{
+  "brand": "LongFu88 Asia",
+  "domain": "https://longfu88asia.com",
+  "tagline": "Casino, live dealers & Asian sports—one refined login",
+  "stats": {
+    "totalGames": "1,480+",
+    "gameCategories": "14",
+    "slotTitles": "920+",
+    "liveTables": "240+",
+    "rngTableGames": "140+",
+    "providers": "62+",
+    "sportsMarkets": "38",
+    "leaguesTracked": "480+",
+    "paymentMethods": "16",
+    "avgWithdrawalHours": "2–24",
+    "supportLanguages": "12"
+  },
+  "categories": [
+    "Slots",
+    "Megaways",
+    "Jackpots",
+    "Live baccarat",
+    "Live roulette",
+    "Live blackjack",
+    "Game shows",
+    "RNG tables",
+    "Crash & instant",
+    "Esports",
+    "Football",
+    "Basketball",
+    "Tennis",
+    "Virtuals"
+  ],
+  "payments": [
+    { "name": "Visa", "type": "Card" },
+    { "name": "Mastercard", "type": "Card" },
+    { "name": "Bank transfer", "type": "Bank" },
+    { "name": "Skrill", "type": "E-wallet" },
+    { "name": "Neteller", "type": "E-wallet" },
+    { "name": "ecoPayz", "type": "E-wallet" },
+    { "name": "USDT (TRC20)", "type": "Crypto" },
+    { "name": "USDT (ERC20)", "type": "Crypto" },
+    { "name": "Bitcoin", "type": "Crypto" },
+    { "name": "Ethereum", "type": "Crypto" },
+    { "name": "Local instant rails", "type": "Region" },
+    { "name": "QR & mobile banking", "type": "Region" },
+    { "name": "PromptPay-style rails", "type": "Region" },
+    { "name": "Prepaid vouchers", "type": "Voucher" },
+    { "name": "Apple Pay", "type": "Mobile" },
+    { "name": "Google Pay", "type": "Mobile" }
+  ],
+  "sportsCoverage": [
+    "Football (pre-match & live)",
+    "Basketball & NBA",
+    "Tennis Grand Slams",
+    "Esports (MOBA, FPS, RTS)",
+    "MMA & boxing",
+    "Badminton & table tennis",
+    "Baseball & volleyball",
+    "Cricket (limited-overs)",
+    "Virtual football & numbers"
+  ]
+}

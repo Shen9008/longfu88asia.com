@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://longfu88asia.com/sitemap.xml
