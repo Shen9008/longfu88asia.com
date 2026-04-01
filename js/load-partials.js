@@ -11,7 +11,7 @@
     function rewriteLinks(html) {
         var isSub = base === '../';
         if (!isSub) return html;
-        var rootPages = ['index.html', 'slots.html', 'live-casino.html', 'sports-betting.html', 'promotions.html', 'payments.html', 'licensing.html', 'about.html', 'responsible-gambling.html', 'help.html', 'terms.html', 'privacy.html'];
+        var rootPages = ['index.html', 'slots.html', 'live-casino.html', 'sports-betting.html', 'promotions.html', 'payments.html', 'licensing.html', 'about.html', 'responsible-gambling.html', 'help.html', 'terms.html', 'privacy.html', 'longfu88-malaysia.html', 'longfu88-vietnam.html', 'longfu88-indonesia.html', 'longfu88-thailand.html', 'longfu88-singapore.html'];
         html = html.replace(/\shref="(?!https?:\/\/|#|mailto:|\.\.\/)([^"]+)"/g, function (_, href) {
             if (rootPages.indexOf(href) !== -1) return ' href="../' + href + '"';
             return ' href="' + href + '"';
