@@ -47,4 +47,33 @@ document.addEventListener('DOMContentLoaded', function () {
             obs.observe(el);
         });
     }
+
+    /* Desktop: dropdown is CSS hover. Touch / no-hover: toggle LongFu88 Asia menu on tap. */
+    document.body.addEventListener('click', function (e) {
+        if (!window.matchMedia('(hover: none)').matches) return;
+        var btn = e.target.closest('.nav__link--dropdown');
+        var item = e.target.closest('.nav__item--dropdown');
+        if (btn && item && item.contains(btn)) {
+            e.stopPropagation();
+            var open = item.classList.toggle('nav__item--dropdown--open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            return;
+        }
+        if (!item) {
+            document.querySelectorAll('.nav__item--dropdown--open').forEach(function (el) {
+                el.classList.remove('nav__item--dropdown--open');
+                var b = el.querySelector('.nav__link--dropdown');
+                if (b) b.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        document.querySelectorAll('.nav__item--dropdown--open').forEach(function (el) {
+            el.classList.remove('nav__item--dropdown--open');
+            var b = el.querySelector('.nav__link--dropdown');
+            if (b) b.setAttribute('aria-expanded', 'false');
+        });
+    });
 });
