@@ -643,6 +643,14 @@ img { max-width: 100%; height: auto; }
     margin-bottom: 0.35rem;
     color: var(--lf-text);
 }
+.feature-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+.feature-card__title a:hover {
+    color: var(--lf-red-dark);
+    text-decoration: underline;
+}
 .feature-card__text { font-size: 0.92rem; color: var(--lf-reading); }
 
 /* Listicle */

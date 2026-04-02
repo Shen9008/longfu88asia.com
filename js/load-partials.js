@@ -86,8 +86,9 @@
                     if (first) first.insertAdjacentHTML('afterend', rewriteLinks(html));
                 }).catch(function () {});
 
-                if (document.body.getAttribute('data-include-explore') === 'true') {
-                    fetch(base + 'partials/explore-sections.html').then(function (r) { return r.text(); }).then(function (html) {
+                var explorePartial = document.body.getAttribute('data-explore-partial');
+                if (explorePartial) {
+                    fetch(base + 'partials/explore-' + explorePartial + '.html').then(function (r) { return r.text(); }).then(function (html) {
                         main.insertAdjacentHTML('beforeend', rewriteLinks(html));
                         if (typeof window.lf88AttachReveal === 'function') {
                             window.lf88AttachReveal(main);
