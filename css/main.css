@@ -759,57 +759,6 @@ img { max-width: 100%; height: auto; }
     margin-top: 0.35rem;
 }
 
-/* Infographic bar (live casino strip) */
-.infographic-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin: 0 0 1rem;
-    align-items: flex-end;
-    min-height: 14px;
-}
-.infographic-bar__segment {
-    flex: 1 1 0;
-    min-width: 0;
-    height: 10px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--lf-red-bright), var(--lf-red-deep));
-    opacity: 0.92;
-}
-.infographic-bar__segment--mid {
-    height: 14px;
-    opacity: 1;
-}
-.live-infographic .container {
-    max-width: 720px;
-}
-.infographic-legend {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 1.25rem;
-    font-size: 0.85rem;
-    color: var(--lf-reading);
-    margin: 0;
-}
-.infographic-legend__item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    white-space: nowrap;
-}
-.infographic-legend__item::before {
-    content: "";
-    flex-shrink: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    background: var(--lf-red-bright);
-}
-.infographic-legend__item--crimson::before {
-    background: var(--lf-crimson);
-}
-
 /* CTA banner */
 .cta-banner {
     padding: 2.5rem 0;
