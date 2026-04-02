@@ -34,19 +34,32 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if ('IntersectionObserver' in window) {
-        var obs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    obs.unobserve(entry.target);
-                }
+    function attachRevealObserver(scope) {
+        var root = scope || document;
+        if (!('IntersectionObserver' in window)) {
+            root.querySelectorAll('[data-reveal]').forEach(function (el) {
+                el.classList.add('is-visible');
             });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('[data-reveal]').forEach(function (el) {
-            obs.observe(el);
+            return;
+        }
+        if (!window._lf88RevealObs) {
+            window._lf88RevealObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        window._lf88RevealObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        }
+        root.querySelectorAll('[data-reveal]').forEach(function (el) {
+            if (!el.classList.contains('is-visible')) {
+                window._lf88RevealObs.observe(el);
+            }
         });
     }
+    attachRevealObserver(document);
+    window.lf88AttachReveal = attachRevealObserver;
 
     /* Desktop: dropdown is CSS hover. Touch / no-hover: toggle LongFu88 Asia menu on tap. */
     document.body.addEventListener('click', function (e) {

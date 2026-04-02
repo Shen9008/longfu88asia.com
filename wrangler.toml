@@ -1,0 +1,6 @@
+# Cloudflare Pages — static site at repo root (no build).
+# Deploy CLI: npx wrangler pages deploy . --project-name=longfu88asia-com
+# Dashboard: connect repo, build command empty, output directory "/" or "."
+
+name = "longfu88asia-com"
+compatibility_date = "2024-01-15"
