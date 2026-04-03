@@ -441,6 +441,10 @@ img { max-width: 100%; height: auto; }
     color: var(--lf-text);
 }
 
+.hero__title-brand {
+    color: var(--lf-red-bright);
+}
+
 .hero__lead {
     font-size: 1.05rem;
     color: var(--lf-reading);

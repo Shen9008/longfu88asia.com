@@ -56,7 +56,8 @@
         ];
         wrap.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true" id="svg-sprite"><defs>' +
             symbols.join('') + '</defs></svg>';
-        document.body.insertBefore(wrap.firstChild, document.body.firstChild);
+        /* Append sprite so Google Tag Manager <noscript> can remain first in <body> */
+        document.body.appendChild(wrap.firstChild);
     }
 
     function run() {

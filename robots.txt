@@ -1,4 +1,6 @@
+# https://longfu88asia.com/
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://longfu88asia.com/sitemap.xml
