@@ -1,7 +1,7 @@
 /* LongFu88 Asia — light theme: silver grey / white surfaces + red accents */
 
 :root {
-    /* Standard hero / banner rhythm (SEO layout stability + future image slots) */
+    /* Standard hero / banner rhythm (layout stability + future image slots) */
     --lf-hero-home-min-h: clamp(380px, 52vh, 560px);
     --lf-page-hero-min-h: clamp(240px, 32vh, 360px);
     --lf-hero-banner-slot-h: clamp(100px, 14vw, 160px);
