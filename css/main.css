@@ -1,14 +1,14 @@
-/* LongFu88 Asia — light theme: silver grey / white surfaces + red accents */
+/* LongFu88 Asia — light theme: soft red / white gradients + red accents */
 
 :root {
     /* Standard hero / banner rhythm (layout stability + future image slots) */
     --lf-hero-home-min-h: clamp(380px, 52vh, 560px);
     --lf-page-hero-min-h: clamp(240px, 32vh, 360px);
     --lf-hero-banner-slot-h: clamp(100px, 14vw, 160px);
-    --lf-bg: #f3f3f5;
-    --lf-bg-elevated: #e6e6ea;
+    --lf-bg: #fffbfb;
+    --lf-bg-elevated: #feeaea;
     --lf-card: #ffffff;
-    --lf-card-hover: #fafafa;
+    --lf-card-hover: #fff8f8;
     --lf-border: rgba(28, 25, 23, 0.12);
     --lf-red: #dc2626;
     --lf-red-bright: #ef4444;
@@ -42,10 +42,12 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font);
-    background: var(--lf-bg);
+    background-color: #ffffff;
     background-image:
-        radial-gradient(ellipse 90% 60% at 50% 0%, rgba(254, 226, 226, 0.45), transparent 55%),
-        radial-gradient(ellipse 70% 50% at 100% 100%, rgba(230, 230, 234, 0.75), transparent);
+        radial-gradient(ellipse 115% 65% at 50% -8%, rgba(254, 202, 202, 0.38), transparent 52%),
+        radial-gradient(ellipse 75% 55% at 100% 45%, rgba(252, 211, 211, 0.22), transparent 48%),
+        radial-gradient(ellipse 70% 50% at 0% 70%, rgba(254, 226, 226, 0.32), transparent 46%),
+        linear-gradient(168deg, #ffffff 0%, #fffdfd 18%, #fff5f5 42%, #fef2f2 62%, #fff8f8 82%, #ffffff 100%);
     color: var(--lf-reading);
     line-height: 1.65;
     min-height: 100vh;
@@ -410,7 +412,7 @@ img { max-width: 100%; height: auto; }
 }
 .hero--home {
     background:
-        linear-gradient(165deg, #ffffff 0%, #f5f5f7 45%, #fef2f2 100%),
+        linear-gradient(168deg, #ffffff 0%, #fff7f7 35%, #ffe4e6 58%, #ffffff 100%),
         url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dc2626' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 .hero__grid {
@@ -542,7 +544,7 @@ img { max-width: 100%; height: auto; }
     padding: 3rem 0;
 }
 .section--alt {
-    background: #fafafa;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, #fff5f5 45%, rgba(255, 255, 255, 0.92) 100%);
     border-top: 1px solid var(--lf-border);
     border-bottom: 1px solid var(--lf-border);
 }
@@ -819,7 +821,7 @@ img { max-width: 100%; height: auto; }
     gap: 1.25rem;
     align-items: flex-start;
     padding: 2rem;
-    background: linear-gradient(135deg, #ffffff 0%, #fdf8f8 50%, #fceaea 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #fff5f5 48%, #fdd8d8 100%);
     border: 1px solid rgba(220, 38, 38, 0.2);
     border-radius: var(--lf-radius-lg);
     box-shadow: var(--lf-shadow);
@@ -904,7 +906,7 @@ img { max-width: 100%; height: auto; }
 .footer {
     padding: 3rem 0 2rem;
     border-top: 1px solid var(--lf-border);
-    background: linear-gradient(180deg, #ececf0 0%, #e2e3e8 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #fff0f0 38%, #fde8e8 100%);
     color: var(--lf-text);
 }
 .footer__grid {
@@ -1054,7 +1056,7 @@ img { max-width: 100%; height: auto; }
     height: var(--lf-hero-banner-slot-h);
     max-height: 160px;
     border-radius: var(--lf-radius);
-    background: linear-gradient(135deg, rgba(254, 226, 226, 0.65) 0%, rgba(230, 230, 234, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(254, 226, 226, 0.75) 55%, rgba(254, 202, 202, 0.35) 100%);
     border: 1px dashed rgba(220, 38, 38, 0.2);
     margin-bottom: 1.25rem;
     flex-shrink: 0;
@@ -1103,7 +1105,7 @@ img { max-width: 100%; height: auto; }
     max-height: 160px;
     margin-bottom: 1rem;
     border-radius: var(--lf-radius);
-    background: linear-gradient(135deg, rgba(254, 226, 226, 0.65) 0%, rgba(230, 230, 234, 0.9) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(254, 226, 226, 0.7) 50%, rgba(254, 202, 202, 0.4) 100%);
     border: 1px dashed rgba(220, 38, 38, 0.2);
 }
 @media (min-width: 900px) {
@@ -1343,7 +1345,7 @@ img { max-width: 100%; height: auto; }
 }
 
 .explore-section--promo {
-    background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+    background: linear-gradient(180deg, #fff5f5 0%, #ffffff 100%);
     border-top: 1px solid var(--lf-border);
 }
 .explore-anchor { scroll-margin-top: 88px; }
