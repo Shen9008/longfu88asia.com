@@ -127,8 +127,19 @@ img { max-width: 100%; height: auto; }
     margin-left: 0.15rem;
     line-height: 1;
 }
+.logo__img {
+    display: block;
+    height: 40px;
+    width: auto;
+    max-width: min(180px, 48vw);
+}
+.logo__img--footer {
+    height: 34px;
+    max-width: 150px;
+    opacity: 0.96;
+}
 .logo--footer {
-    align-items: baseline;
+    align-items: center;
 }
 .logo--footer .logo__region { display: none; }
 
@@ -626,6 +637,41 @@ img { max-width: 100%; height: auto; }
     box-shadow: var(--lf-shadow);
     transform: translateY(-3px);
 }
+.feature-card--visual {
+    padding: 0 0 1.35rem;
+    overflow: hidden;
+}
+.feature-card__thumb {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--lf-bg-elevated);
+    margin-bottom: 0.85rem;
+}
+.feature-card__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.feature-card__thumb--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #fef2f2 0%, #e8e8ec 100%);
+    min-height: 140px;
+}
+.feature-card__thumb--icon img {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+}
+.feature-card--visual .feature-card__title,
+.feature-card--visual .feature-card__text {
+    padding: 0 1.35rem;
+}
+.feature-card--visual .feature-card__title {
+    margin-top: 0;
+}
 .feature-card__icon {
     width: 40px;
     height: 40px;
@@ -780,14 +826,24 @@ img { max-width: 100%; height: auto; }
 }
 .cta-banner__visual {
     flex-shrink: 0;
-    width: 56px;
-    height: 56px;
+    width: auto;
+    min-width: 0;
+    max-width: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: rgba(220, 38, 38, 0.08);
+    background: transparent;
     color: var(--lf-red-dark);
+}
+.cta-banner__promo-img {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(220, 38, 38, 0.14);
+    box-shadow: var(--lf-shadow);
 }
 .cta-banner__icon {
     display: block;
@@ -1003,6 +1059,45 @@ img { max-width: 100%; height: auto; }
     margin-bottom: 1.25rem;
     flex-shrink: 0;
 }
+.page-hero__banner-slot[class*="--img-"],
+.hero-banner-slot[class*="--img-"] {
+    border-style: solid;
+    border-color: rgba(220, 38, 38, 0.14);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.page-hero__banner-slot--img-about,
+.page-hero__banner-slot--img-legal {
+    background-image: url(../images/hero-about.webp);
+}
+.page-hero__banner-slot--img-help {
+    background-image: url(../images/hero-payments.webp);
+}
+.page-hero__banner-slot--img-slots {
+    background-image: url(../images/hero-slots.webp);
+}
+.page-hero__banner-slot--img-live {
+    background-image: url(../images/hero-live-casino.webp);
+}
+.page-hero__banner-slot--img-sports {
+    background-image: url(../images/hero-sports.webp);
+}
+.page-hero__banner-slot--img-payments {
+    background-image: url(../images/hero-payments.webp);
+}
+.page-hero__banner-slot--img-promotions {
+    background-image: url(../images/hero-promotions.webp);
+}
+.page-hero__banner-slot--img-trust {
+    background-image: url(../images/hero-trust.webp);
+}
+.page-hero__banner-slot--img-malaysia {
+    background-image: url(../images/hero-malaysia.webp);
+}
+.page-hero__banner-slot--img-region {
+    background-image: url(../images/hero-home.webp);
+}
 .hero-banner-slot--home {
     height: var(--lf-hero-banner-slot-h);
     max-height: 160px;
@@ -1013,6 +1108,14 @@ img { max-width: 100%; height: auto; }
 }
 @media (min-width: 900px) {
     .hero-banner-slot--home { margin-bottom: 1.5rem; }
+}
+.hero-banner-slot--home.hero-banner-slot--img-home-main {
+    background-image: url(../images/hero-home-main.webp);
+    border-style: solid;
+    border-color: rgba(220, 38, 38, 0.14);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
 }
 .page-hero__title {
     font-family: var(--font-display);
@@ -1134,6 +1237,14 @@ img { max-width: 100%; height: auto; }
     aspect-ratio: 16 / 10;
     background: linear-gradient(145deg, #e8e8ec 0%, #fef2f2 55%, #fecaca 100%);
     flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+}
+.game-tile__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 .game-tile__media--jackpot {
     background: linear-gradient(145deg, #fef3c7 0%, #fde68a 40%, #fca5a5 100%);
@@ -1236,6 +1347,43 @@ img { max-width: 100%; height: auto; }
     border-top: 1px solid var(--lf-border);
 }
 .explore-anchor { scroll-margin-top: 88px; }
+
+.sports-visual-strip {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin: 0 0 1.5rem;
+}
+@media (min-width: 640px) {
+    .sports-visual-strip {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+.sports-visual-strip img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--lf-radius);
+    border: 1px solid var(--lf-border);
+    background: var(--lf-bg-elevated);
+}
+
+.promo-explore-banner {
+    margin: 0 0 1.5rem;
+    border-radius: var(--lf-radius);
+    overflow: hidden;
+    border: 1px solid var(--lf-border);
+    background: var(--lf-bg-elevated);
+    max-height: min(200px, 28vw);
+}
+.promo-explore-banner__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
 
 @media (max-width: 599px) {
     .hero__lead { max-width: none; }
