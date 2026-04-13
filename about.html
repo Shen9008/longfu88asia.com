@@ -30,10 +30,39 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <script defer src="js/load-partials.js"></script>
     <script defer src="js/main.js"></script>
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"AboutPage","name":"About LongFu88 Asia","url":"https://longfu88asia.com/about.html","description":"Mission, product scale, and how longfu88asia.com covers LongFu88 and LongFu88 Asia.","isPartOf":{"@id":"https://longfu88asia.com/#website"}}
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://longfu88asia.com/#organization",
+        "name": "longfu88asia.com",
+        "alternateName": ["LongFu88 Asia Guide", "LongFu88 Asia"],
+        "url": "https://longfu88asia.com/",
+        "logo": { "@type": "ImageObject", "url": "https://longfu88asia.com/images/logo.webp" },
+        "description": "Independent player guides about LongFu88. Not a gambling operator."
+    }
     </script>
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Organization","name":"longfu88asia.com","url":"https://longfu88asia.com/","description":"Informational site about LongFu88 products, payments, trust, and regional play&mdash;not a wagering operator."}
+    {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "@id": "https://longfu88asia.com/about.html#webpage",
+        "url": "https://longfu88asia.com/about.html",
+        "name": "About LongFu88 Asia",
+        "description": "Mission, product scale, and how longfu88asia.com covers LongFu88 and LongFu88 Asia.",
+        "isPartOf": { "@id": "https://longfu88asia.com/#website" },
+        "publisher": { "@id": "https://longfu88asia.com/#organization" },
+        "inLanguage": "en"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://longfu88asia.com/" },
+            { "@type": "ListItem", "position": 2, "name": "About", "item": "https://longfu88asia.com/about.html" }
+        ]
+    }
     </script>
 </head>
 <body data-page="about">
