@@ -1,12 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
-    document.body.addEventListener('click', function (e) {
-        var toggle = e.target.closest('.mobile-menu-toggle');
-        if (!toggle) return;
-        var menu = document.querySelector('.mobile-menu');
-        if (!menu) return;
-        menu.classList.toggle('active');
+    var menu = document.querySelector('.mobile-menu');
+    var toggle = document.querySelector('.mobile-menu-toggle');
+
+    function setMobileMenuOpen(open) {
+        if (!menu || !toggle) return;
+        menu.classList.toggle('active', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.classList.toggle('mobile-menu-open', open);
         var use = toggle.querySelector('use');
-        if (use) use.setAttribute('href', menu.classList.contains('active') ? '#icon-close' : '#icon-menu');
+        if (use) use.setAttribute('href', open ? '#icon-close' : '#icon-menu');
+    }
+
+    document.body.addEventListener('click', function (e) {
+        var t = e.target.closest('.mobile-menu-toggle');
+        if (!menu || !toggle || !t || t !== toggle) return;
+        setMobileMenuOpen(!menu.classList.contains('active'));
     });
 
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
@@ -17,11 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (target) {
                 e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                var menu = document.querySelector('.mobile-menu');
                 if (menu && menu.classList.contains('active')) {
-                    menu.classList.remove('active');
-                    var t = document.querySelector('.mobile-menu-toggle use');
-                    if (t) t.setAttribute('href', '#icon-menu');
+                    setMobileMenuOpen(false);
                 }
             }
         });
@@ -83,6 +89,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
+        if (menu && menu.classList.contains('active')) {
+            setMobileMenuOpen(false);
+            if (toggle) toggle.focus();
+            return;
+        }
         document.querySelectorAll('.nav__item--dropdown--open').forEach(function (el) {
             el.classList.remove('nav__item--dropdown--open');
             var b = el.querySelector('.nav__link--dropdown');
