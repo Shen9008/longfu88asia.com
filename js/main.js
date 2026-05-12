@@ -1,8 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var menu = document.querySelector('.mobile-menu');
-    var toggle = document.querySelector('.mobile-menu-toggle');
+    /* Header/footer load async via load-partials.js — always query menu/toggle at use time */
+    function getMobileMenu() {
+        return document.querySelector('.mobile-menu');
+    }
+
+    function getMobileMenuToggle() {
+        return document.querySelector('.mobile-menu-toggle');
+    }
 
     function setMobileMenuOpen(open) {
+        var menu = getMobileMenu();
+        var toggle = getMobileMenuToggle();
         if (!menu || !toggle) return;
         menu.classList.toggle('active', open);
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -10,11 +18,19 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.toggle('mobile-menu-open', open);
         var use = toggle.querySelector('use');
         if (use) use.setAttribute('href', open ? '#icon-close' : '#icon-menu');
+        var backdrop = document.querySelector('.mobile-menu-backdrop');
+        if (backdrop) backdrop.setAttribute('aria-hidden', open ? 'false' : 'true');
     }
 
     document.body.addEventListener('click', function (e) {
+        if (e.target.closest('.mobile-menu-backdrop')) {
+            setMobileMenuOpen(false);
+            return;
+        }
         var t = e.target.closest('.mobile-menu-toggle');
-        if (!menu || !toggle || !t || t !== toggle) return;
+        if (!t) return;
+        var menu = getMobileMenu();
+        if (!menu || !document.body.contains(menu)) return;
         setMobileMenuOpen(!menu.classList.contains('active'));
     });
 
@@ -24,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (href === '#') return;
             var target = document.querySelector(href);
             if (target) {
+                var menu = getMobileMenu();
                 e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 if (menu && menu.classList.contains('active')) {
@@ -33,39 +50,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    var header = document.querySelector('.header');
-    if (header) {
-        window.addEventListener('scroll', function () {
-            header.classList.toggle('header--scrolled', window.pageYOffset > 80);
-        });
+    window.addEventListener('scroll', function () {
+        var header = document.querySelector('.header');
+        if (!header) return;
+        header.classList.toggle('header--scrolled', window.pageYOffset > 80);
+    });
+
+    function refreshScrollTopButton() {
+        var btn = document.querySelector('.scroll-top');
+        if (!btn) return;
+        btn.classList.toggle('is-visible', window.scrollY > 360);
     }
 
-    function attachRevealObserver(scope) {
-        var root = scope || document;
-        if (!('IntersectionObserver' in window)) {
-            root.querySelectorAll('[data-reveal]').forEach(function (el) {
-                el.classList.add('is-visible');
-            });
-            return;
-        }
-        if (!window._lf88RevealObs) {
-            window._lf88RevealObs = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        window._lf88RevealObs.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-        }
-        root.querySelectorAll('[data-reveal]').forEach(function (el) {
-            if (!el.classList.contains('is-visible')) {
-                window._lf88RevealObs.observe(el);
-            }
-        });
-    }
-    attachRevealObserver(document);
-    window.lf88AttachReveal = attachRevealObserver;
+    window.addEventListener('scroll', refreshScrollTopButton, { passive: true });
+    document.addEventListener('lf88-partials-ready', refreshScrollTopButton);
+
+    document.body.addEventListener('click', function (e) {
+        var scrollBtn = e.target.closest('.scroll-top');
+        if (!scrollBtn) return;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+        scrollBtn.blur();
+    });
 
     /* Desktop: dropdown is CSS hover. Touch / no-hover: toggle LongFu88 Asia menu on tap. */
     document.body.addEventListener('click', function (e) {
@@ -89,6 +95,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
+        var menu = getMobileMenu();
+        var toggle = getMobileMenuToggle();
         if (menu && menu.classList.contains('active')) {
             setMobileMenuOpen(false);
             if (toggle) toggle.focus();

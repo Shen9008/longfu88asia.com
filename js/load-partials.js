@@ -6,12 +6,15 @@
     'use strict';
 
     var pathname = window.location.pathname || '';
-    var base = pathname.split('/').length > 2 && pathname.indexOf('/news/') !== -1 ? '../' : '';
+    var norm = pathname.replace(/\\/g, '/');
+    /** True when URLs need `../` on root-relative page links injected into header/footer partials */
+    var isBlogOrNewsSection = norm.indexOf('/news/') !== -1 || /\/blog(\/|$)/.test(norm);
+    var rewriteBase = isBlogOrNewsSection ? '../' : '';
 
     function rewriteLinks(html) {
-        var isSub = base === '../';
+        var isSub = rewriteBase === '../';
         if (!isSub) return html;
-        var rootPages = ['index.html', 'slots.html', 'live-casino.html', 'sports-betting.html', 'promotions.html', 'payments.html', 'licensing.html', 'about.html', 'responsible-gambling.html', 'help.html', 'terms.html', 'privacy.html', 'longfu88-malaysia.html', 'longfu88-vietnam.html', 'longfu88-indonesia.html', 'longfu88-thailand.html', 'longfu88-singapore.html'];
+        var rootPages = ['index.html', 'slots.html', 'live-casino.html', 'sports-betting.html', 'promotions.html', 'payments.html', 'licensing.html', 'about.html', 'responsible-gambling.html', 'help.html', 'terms.html', 'privacy.html', 'longfu88-malaysia.html', 'longfu88-vietnam.html', 'longfu88-indonesia.html', 'longfu88-thailand.html', 'longfu88-singapore.html', 'blog/index.html'];
         html = html.replace(/\shref="(?!https?:\/\/|#|mailto:|\.\.\/)([^"]+)"/g, function (_, href) {
             var hrefBase = href.split('#')[0];
             if (rootPages.indexOf(hrefBase) !== -1) return ' href="../' + href + '"';
@@ -33,9 +36,10 @@
         if (document.getElementById('svg-sprite')) return;
         var wrap = document.createElement('div');
         var symbols = [
-            '<symbol id="icon-menu" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></symbol>',
-            '<symbol id="icon-close" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></symbol>',
+            '<symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8h14M5 12h14M5 16h14"/></symbol>',
+            '<symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>',
             '<symbol id="icon-sparkle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 5.4L19 12l-5.2 2.8L12 22l-1.8-5.4L5 12l5.2-2.8L12 2z"/></symbol>',
+            '<symbol id="icon-join-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h11M14 9l4 3-4 3"/></symbol>',
             '<symbol id="icon-slots" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4h4v16H5V4zm5 0h4v16h-4V4zm5 0h4v16h-4V4z"/></symbol>',
             '<symbol id="icon-live" viewBox="0 0 24 24" fill="currentColor"><path d="M4 7h11v10H4V7zm13 1.5l5 3.5-5 3.5V8.5z"/></symbol>',
             '<symbol id="icon-sports" viewBox="0 0 24 24" fill="currentColor"><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6h-5.6z"/></symbol>',
@@ -53,7 +57,11 @@
             '<symbol id="icon-heart" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></symbol>',
             '<symbol id="icon-book" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h7v16H6a2 2 0 01-2-2V6a2 2 0 012-2zm9 0h5a2 2 0 012 2v14a2 2 0 01-2 2h-5V4z"/></symbol>',
             '<symbol id="icon-clock" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm.5 5H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/></symbol>',
-            '<symbol id="icon-circle-check" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M10.5 14.26L7.24 11l1.41-1.41L10.5 11.44l4.59-4.59L16.41 8.2l-5.91 6.06z"/></symbol>'
+            '<symbol id="icon-circle-check" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M10.5 14.26L7.24 11l1.41-1.41L10.5 11.44l4.59-4.59L16.41 8.2l-5.91 6.06z"/></symbol>',
+            '<symbol id="icon-gamepad-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h3.5a5 5 0 0 1 0 10h-5.5l-4.015 4.227a2.3 2.3 0 0 1-3.923-2.035l1.634-8.173a5 5 0 0 1 4.904-4.019h3.4z"/><path d="M14 15l4.07 4.284a2.3 2.3 0 0 0 3.925-2.023l-1.6-8.232"/><path d="M8 9v2"/><path d="M7 10h2"/><path d="M14 10h2"/></symbol>',
+            '<symbol id="icon-ball-football" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M12 7l4.76 3.45l-1.76 5.55h-6l-1.76 -5.55z"/><path d="M12 7v-4m3 13l2.5 3m-.74 -8.55l3.74 -1.45m-11.44 7.05l-2.56 2.95m.74 -8.55l-3.74 -1.45"/></symbol>',
+            '<symbol id="icon-ball-basketball" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0"/><path d="M5.65 5.65l12.7 12.7"/><path d="M5.65 18.35l12.7-12.7"/><path d="M12 3a9 9 0 0 0 9 9"/><path d="M3 12a9 9 0 0 1 9 9"/></symbol>',
+            '<symbol id="icon-cards" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.604 7.197l7.138 -3.109a.96 .96 0 0 1 1.27 .527l4.924 11.902a1 1 0 0 1 -.514 1.304l-7.137 3.109a.96 .96 0 0 1 -1.271 -.527l-4.924 -11.903a1 1 0 0 1 .514 -1.304z"/><path d="M15 4h1a1 1 0 0 1 1 1v3.5"/><path d="M20 6c.264 .112 .52 .217 .768 .315a1 1 0 0 1 .53 1.311l-2.298 5.374"/></symbol>'
         ];
         wrap.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true" id="svg-sprite"><defs>' +
             symbols.join('') + '</defs></svg>';
@@ -64,8 +72,8 @@
     function run() {
         injectSprite();
         Promise.all([
-            fetch(base + 'partials/header.html').then(function (r) { return r.text(); }),
-            fetch(base + 'partials/footer.html').then(function (r) { return r.text(); })
+            fetch('/partials/header.html').then(function (r) { return r.text(); }),
+            fetch('/partials/footer.html').then(function (r) { return r.text(); })
         ]).then(function (parts) {
             var headerHtml = rewriteLinks(parts[0]);
             var footerHtml = rewriteLinks(parts[1]);
@@ -80,21 +88,22 @@
             }
             if (footerPh) footerPh.outerHTML = footerHtml;
             setActiveNav();
+            document.dispatchEvent(new CustomEvent('lf88-partials-ready'));
 
             var main = document.getElementById('main-content');
             if (main) {
-                fetch(base + 'partials/cta-banner.html').then(function (r) { return r.text(); }).then(function (html) {
+                fetch('/partials/cta-banner.html').then(function (r) { return r.text(); }).then(function (html) {
                     var first = main.querySelector('section');
                     if (first) first.insertAdjacentHTML('afterend', rewriteLinks(html));
                 }).catch(function () {});
 
                 var explorePartial = document.body.getAttribute('data-explore-partial');
                 if (explorePartial) {
-                    fetch(base + 'partials/explore-' + explorePartial + '.html').then(function (r) { return r.text(); }).then(function (html) {
+                    fetch('/partials/explore-' + explorePartial + '.html').then(function (r) {
+                        if (!r.ok) throw new Error('explore');
+                        return r.text();
+                    }).then(function (html) {
                         main.insertAdjacentHTML('beforeend', rewriteLinks(html));
-                        if (typeof window.lf88AttachReveal === 'function') {
-                            window.lf88AttachReveal(main);
-                        }
                     }).catch(function () {});
                 }
             }

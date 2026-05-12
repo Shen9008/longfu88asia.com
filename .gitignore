@@ -5,3 +5,6 @@ node_modules/
 .env.*
 *.log
 *.docx
+
+# Local icon pack scratch (not part of site)
+tmp_icons/

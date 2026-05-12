@@ -101,15 +101,19 @@ async function main() {
     console.log('Wrote', path.relative(root, dest));
   }
 
-  const favSrc = path.join(imgRoot, 'Favicon.png');
-  if (!fs.existsSync(favSrc)) {
-    console.error('Missing', favSrc);
+  const favCandidates = [
+    path.join(imgRoot, 'favicon.png'),
+    path.join(imgRoot, 'Favicon.png'),
+  ];
+  const favSrc = favCandidates.find((p) => fs.existsSync(p));
+  if (!favSrc) {
+    console.error('Missing favicon source (images/favicon.png or images/Favicon.png)');
     process.exitCode = 1;
   } else {
+    /** Derive favicon.webp + apple-touch only; keep images/favicon.png as the authored tab icon. */
     await sharp(favSrc).resize(32, 32, { fit: 'cover' }).webp({ quality: 85 }).toFile(path.join(imgRoot, 'favicon.webp'));
-    await toPngResize(favSrc, path.join(imgRoot, 'favicon.png'), 32);
     await toPngResize(favSrc, path.join(imgRoot, 'apple-touch-icon.png'), 180);
-    console.log('Wrote favicon.webp, favicon.png, apple-touch-icon.png');
+    console.log('Wrote favicon.webp, apple-touch-icon.png from', path.relative(root, favSrc));
   }
 }
 
