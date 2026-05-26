@@ -8,7 +8,7 @@
     var MAX_PAGE = 99;
     var MAX_POSTS = PAGE_SIZE * MAX_PAGE;
     var DATA_URL = '/assets/data/blogs.json';
-    var DEFAULT_BLOG_IMAGE = '/images/blog-default.png';
+    var DEFAULT_BLOG_IMAGE = '/images/blog-default.webp';
     /** Subtle gradient accents on thumbnails (helps when many posts share the default art). */
     var CARD_ACCENT_HUES = [352, 28, 48, 200, 265];
 

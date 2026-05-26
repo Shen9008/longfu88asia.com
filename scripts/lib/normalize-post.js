@@ -3,7 +3,7 @@
 require('./load-env.js');
 
 /** Site-relative fallback when CMS image field is empty */
-const BLOG_DEFAULT_IMAGE = '/images/blog-default.png';
+const BLOG_DEFAULT_IMAGE = '/images/blog-default.webp';
 
 const INTENT_GRADIENTS = {
   navigational:

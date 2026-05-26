@@ -1,5 +1,5 @@
 /**
- * Build WebP (and small PNG favicons) from images/ source folders.
+ * Build site WebP assets from images/ sources (heroes, games, logo, favicons, blog default).
  * Run: npm install && npm run optimize-images
  */
 import sharp from 'sharp';
@@ -27,13 +27,6 @@ async function toWebp(src, dest, { width, height, quality = 82, fit = 'cover', p
     });
   }
   await p.webp({ quality, effort: 5 }).toFile(dest);
-}
-
-async function toPngResize(src, dest, size) {
-  await sharp(src)
-    .resize(size, size, { fit: 'cover', position: 'centre' })
-    .png({ compressionLevel: 9 })
-    .toFile(dest);
 }
 
 async function main() {
@@ -101,6 +94,20 @@ async function main() {
     console.log('Wrote', path.relative(root, dest));
   }
 
+  const blogDefaultPng = path.join(imgRoot, 'blog-default.png');
+  const blogDefaultWebp = path.join(imgRoot, 'blog-default.webp');
+  if (fs.existsSync(blogDefaultPng)) {
+    await sharp(blogDefaultPng)
+      .resize(1200, 630, { fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 85, effort: 5 })
+      .toFile(blogDefaultWebp);
+    console.log('Wrote', path.relative(root, blogDefaultWebp));
+  } else if (fs.existsSync(blogDefaultWebp)) {
+    console.log('Keep', path.relative(root, blogDefaultWebp), '(add blog-default.png to rebuild from source)');
+  } else {
+    console.warn('Optional source missing: blog-default.png (or prebuilt blog-default.webp)');
+  }
+
   const favCandidates = [
     path.join(imgRoot, 'favicon.png'),
     path.join(imgRoot, 'Favicon.png'),
@@ -110,10 +117,13 @@ async function main() {
     console.error('Missing favicon source (images/favicon.png or images/Favicon.png)');
     process.exitCode = 1;
   } else {
-    /** Derive favicon.webp + apple-touch only; keep images/favicon.png as the authored tab icon. */
+    /** Derive favicon.webp + apple-touch-icon.webp (HTML uses WebP; PNG remains as rebuild source only). */
     await sharp(favSrc).resize(32, 32, { fit: 'cover' }).webp({ quality: 85 }).toFile(path.join(imgRoot, 'favicon.webp'));
-    await toPngResize(favSrc, path.join(imgRoot, 'apple-touch-icon.png'), 180);
-    console.log('Wrote favicon.webp, apple-touch-icon.png from', path.relative(root, favSrc));
+    await sharp(favSrc)
+      .resize(180, 180, { fit: 'cover', position: 'centre' })
+      .webp({ quality: 88, effort: 5 })
+      .toFile(path.join(imgRoot, 'apple-touch-icon.webp'));
+    console.log('Wrote favicon.webp, apple-touch-icon.webp from', path.relative(root, favSrc));
   }
 }
 
