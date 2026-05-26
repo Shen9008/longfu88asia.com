@@ -20,10 +20,13 @@
         return u.indexOf('/') === 0 ? u : '/' + u;
     }
 
-    function sortBlogsByLatestSyncFirst(a, b) {
-        var tb = new Date(b.synced_at || b.published_date || 0).getTime();
-        var ta = new Date(a.synced_at || a.published_date || 0).getTime();
-        if (tb !== ta) return tb - ta;
+    function sortBlogsByLatestFirst(a, b) {
+        var pb = new Date(b.published_date || 0).getTime();
+        var pa = new Date(a.published_date || 0).getTime();
+        if (pb !== pa) return pb - pa;
+        var ub = new Date(b.cms_updated_at || b.synced_at || 0).getTime();
+        var ua = new Date(a.cms_updated_at || a.synced_at || 0).getTime();
+        if (ub !== ua) return ub - ua;
         return String(b.slug).localeCompare(String(a.slug));
     }
 
@@ -161,7 +164,7 @@
         if (truncatedEl) {
             truncatedEl.hidden = !(window.__lfBlogTruncated);
             if (window.__lfBlogTruncated) {
-                truncatedEl.textContent = 'Showing the ' + MAX_POSTS + ' most recently synced posts. Older entries are still on the site via direct links and search.';
+                truncatedEl.textContent = 'Showing the ' + MAX_POSTS + ' most recent posts. Older entries are still on the site via direct links and search.';
             }
         }
     }
@@ -228,7 +231,7 @@
             return r.json();
         }).then(function (data) {
             var posts = Array.isArray(data) ? data.slice() : [];
-            posts.sort(sortBlogsByLatestSyncFirst);
+            posts.sort(sortBlogsByLatestFirst);
             window.__lfBlogTruncated = posts.length > MAX_POSTS;
             var visible = posts.slice(0, MAX_POSTS);
             window.__lfBlogPostsAll = visible;

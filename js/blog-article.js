@@ -1,5 +1,5 @@
 /**
- * Blog article: recent sidebar + related posts from blogs.json (same sort as content-sync.js)
+ * Blog article: recent sidebar + related posts from blogs.json (latest-first sort)
  */
 (function () {
     'use strict';
@@ -7,10 +7,13 @@
     var DATA_URL = '/assets/data/blogs.json';
     var SIDEBAR_RECENT_COUNT = 3;
 
-    function sortBlogsByLatestSyncFirst(a, b) {
-        var tb = new Date(b.synced_at || b.published_date || 0).getTime();
-        var ta = new Date(a.synced_at || a.published_date || 0).getTime();
-        if (tb !== ta) return tb - ta;
+    function sortBlogsByLatestFirst(a, b) {
+        var pb = new Date(b.published_date || 0).getTime();
+        var pa = new Date(a.published_date || 0).getTime();
+        if (pb !== pa) return pb - pa;
+        var ub = new Date(b.cms_updated_at || b.synced_at || 0).getTime();
+        var ua = new Date(a.cms_updated_at || a.synced_at || 0).getTime();
+        if (ub !== ua) return ub - ua;
         return String(b.slug).localeCompare(String(a.slug));
     }
 
@@ -60,7 +63,7 @@
             return r.json();
         }).then(function (data) {
             var posts = Array.isArray(data) ? data.slice() : [];
-            posts.sort(sortBlogsByLatestSyncFirst);
+            posts.sort(sortBlogsByLatestFirst);
 
             var bySlug = {};
             posts.forEach(function (p) { if (p.slug) bySlug[p.slug] = p; });

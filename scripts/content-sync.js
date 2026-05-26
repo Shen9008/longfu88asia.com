@@ -22,10 +22,13 @@ const BLOGS_JSON_FIELDS = [
   'synced_at',
 ];
 
-function sortBlogsByLatestSyncFirst(a, b) {
-  const tb = new Date(b.synced_at || b.published_date || 0).getTime();
-  const ta = new Date(a.synced_at || a.published_date || 0).getTime();
-  if (tb !== ta) return tb - ta;
+function sortBlogsByLatestFirst(a, b) {
+  const pb = new Date(b.published_date || 0).getTime();
+  const pa = new Date(a.published_date || 0).getTime();
+  if (pb !== pa) return pb - pa;
+  const ub = new Date(b.cms_updated_at || b.synced_at || 0).getTime();
+  const ua = new Date(a.cms_updated_at || a.synced_at || 0).getTime();
+  if (ub !== ua) return ub - ua;
   return String(b.slug).localeCompare(String(a.slug));
 }
 
@@ -156,15 +159,15 @@ function getRelatedSlugs(blogs, currentSlug, opts = {}, limit = 3) {
   const siteDomain = getPostsSyncConfig().siteDomain;
   const others = blogs.filter((b) => b.slug !== currentSlug && isAllowedForSite(b.slug, siteDomain));
 
-  const sameIntent = others.filter((b) => (b.search_intent || '').toLowerCase() === searchIntent).sort(sortBlogsByLatestSyncFirst);
+  const sameIntent = others.filter((b) => (b.search_intent || '').toLowerCase() === searchIntent).sort(sortBlogsByLatestFirst);
   const sameIntentSlugs = new Set(sameIntent.map((b) => b.slug));
   const sameCategory = others
     .filter((b) => !sameIntentSlugs.has(b.slug) && category && (b.category || '').toLowerCase() === category)
-    .sort(sortBlogsByLatestSyncFirst);
+    .sort(sortBlogsByLatestFirst);
   const sameCategorySlugs = new Set(sameCategory.map((b) => b.slug));
   const rest = others
     .filter((b) => !sameIntentSlugs.has(b.slug) && !sameCategorySlugs.has(b.slug))
-    .sort(sortBlogsByLatestSyncFirst);
+    .sort(sortBlogsByLatestFirst);
 
   const merged = [...sameIntent, ...sameCategory, ...rest];
   return merged.slice(0, limit).map((b) => b.slug);
@@ -290,7 +293,7 @@ function processWorklist(toProcess, existingBlogs) {
     blogs = upsertBlogEntry(blogs, entry);
   }
 
-  blogs.sort(sortBlogsByLatestSyncFirst);
+  blogs.sort(sortBlogsByLatestFirst);
   saveBlogsJson(blogs);
   generateSitemap();
 }
