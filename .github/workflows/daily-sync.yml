@@ -24,6 +24,7 @@ jobs:
       BLOG_BASE_PATH: "${{ vars.BLOG_BASE_PATH }}"
       STRAPI_COLLECTION: "${{ vars.STRAPI_COLLECTION }}"
       SITE_DOMAIN: "${{ vars.SITE_DOMAIN }}"
+      SYNC_REQUIRE_SITE_FILTER: "1"
 
     steps:
       - name: Checkout repo
@@ -48,6 +49,25 @@ jobs:
           STRAPI_API_URL: ${{ secrets.STRAPI_API_URL }}
           STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
 
+      - name: Check site filter config
+        run: |
+          if [ -z "${SITE_DOMAIN:-}" ]; then
+            echo '::error::Configure repository variable SITE_DOMAIN (e.g. longfu88asia.com).'
+            exit 1
+          fi
+          if [ "${SKIP_POSTS_SITE_FILTER:-}" = "1" ] || [ "${SKIP_POSTS_SITE_FILTER:-}" = "true" ] || [ "${SKIP_POSTS_SITE_FILTER:-}" = "yes" ]; then
+            echo '::error::SKIP_POSTS_SITE_FILTER must not be enabled for daily sync.'
+            exit 1
+          fi
+          npm run sync:doctor
+        env:
+          STRAPI_API_URL: ${{ secrets.STRAPI_API_URL }}
+          STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
+          SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
+          POSTS_COLLECTION: ${{ vars.STRAPI_COLLECTION }}
+          POSTS_SITE_FILTER_KEY: ${{ vars.POSTS_SITE_FILTER_KEY }}
+          SKIP_POSTS_SITE_FILTER: ${{ vars.SKIP_POSTS_SITE_FILTER }}
+
       - name: Daily sync from Strapi
         run: npm run sync:daily
         env:
@@ -58,6 +78,7 @@ jobs:
           POSTS_SITE_FILTER_KEY: ${{ vars.POSTS_SITE_FILTER_KEY }}
           SKIP_POSTS_SITE_FILTER: ${{ vars.SKIP_POSTS_SITE_FILTER }}
           PUBLIC_SITE_ORIGIN: ${{ vars.SITE_BASE_URL }}
+          SYNC_REQUIRE_SITE_FILTER: "1"
 
       - name: Commit synced content
         run: |

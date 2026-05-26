@@ -3,13 +3,14 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const { fetchPosts } = require('./lib/fetch-posts.js');
+const { fetchPosts, getPostsSyncConfig } = require('./lib/fetch-posts.js');
 const { normalizePost, validatePost } = require('./lib/normalize-post.js');
 const { renderArticle } = require('./lib/render-article.js');
 const { generateSitemap } = require('./lib/generate-sitemap.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const BLOGS_JSON_PATH = path.join(ROOT, 'assets/data/blogs.json');
+const BLOG_DIR = path.join(ROOT, 'blog');
 
 const BLOGS_JSON_FIELDS = [
   'slug', 'title', 'meta_title', 'meta_description', 'focus_keyword',
@@ -40,6 +41,74 @@ function toBlogsEntry(normalized, raw, contentHash) {
 
 function getPostSlug(raw) {
   return raw.slug || raw.documentId || '';
+}
+
+function siteBrandToken(siteDomain) {
+  const domain = String(siteDomain || '').trim().toLowerCase();
+  if (!domain) return '';
+  return domain.split('.')[0];
+}
+
+function isAllowedForSite(slug, siteDomain) {
+  const token = siteBrandToken(siteDomain);
+  if (!token) return true;
+  return String(slug || '').toLowerCase().includes(token);
+}
+
+function filterPostsForSite(posts, siteDomain) {
+  const cfg = getPostsSyncConfig();
+  if (!cfg.applySiteFilter || !siteDomain) return posts;
+
+  const allowed = [];
+  let skipped = 0;
+  for (const raw of posts) {
+    const slug = getPostSlug(raw);
+    if (!slug) continue;
+    if (isAllowedForSite(slug, siteDomain)) {
+      allowed.push(raw);
+    } else {
+      skipped++;
+    }
+  }
+
+  if (skipped > 0) {
+    console.warn(`Skipped ${skipped} off-site post(s) not matching ${siteBrandToken(siteDomain)} in slug.`);
+  }
+
+  return allowed;
+}
+
+function pruneDisallowedBlogEntries(blogs, siteDomain) {
+  const token = siteBrandToken(siteDomain);
+  if (!token) return blogs;
+
+  const kept = [];
+  for (const entry of blogs) {
+    if (isAllowedForSite(entry.slug, siteDomain)) {
+      kept.push(entry);
+      continue;
+    }
+
+    const htmlPath = path.join(BLOG_DIR, `${entry.slug}.html`);
+    if (fs.existsSync(htmlPath)) {
+      fs.unlinkSync(htmlPath);
+    }
+    console.log(`  - [Removed] off-site blog entry: ${entry.slug}`);
+  }
+
+  return kept;
+}
+
+function sanitizeRelatedPosts(blogs, siteDomain) {
+  const allowedSlugs = new Set(blogs.map((b) => b.slug));
+  for (const entry of blogs) {
+    if (!Array.isArray(entry.related_posts)) continue;
+    entry.related_posts = entry.related_posts.filter((slug) => {
+      if (!allowedSlugs.has(slug)) return false;
+      return isAllowedForSite(slug, siteDomain);
+    });
+  }
+  return blogs;
 }
 
 function hashContent(content) {
@@ -84,7 +153,8 @@ function getSyncAction(raw, existing, opts) {
 function getRelatedSlugs(blogs, currentSlug, opts = {}, limit = 3) {
   const searchIntent = (opts.searchIntent || 'informational').toLowerCase();
   const category = (opts.category || '').toLowerCase();
-  const others = blogs.filter((b) => b.slug !== currentSlug);
+  const siteDomain = getPostsSyncConfig().siteDomain;
+  const others = blogs.filter((b) => b.slug !== currentSlug && isAllowedForSite(b.slug, siteDomain));
 
   const sameIntent = others.filter((b) => (b.search_intent || '').toLowerCase() === searchIntent).sort(sortBlogsByLatestSyncFirst);
   const sameIntentSlugs = new Set(sameIntent.map((b) => b.slug));
@@ -239,10 +309,17 @@ async function run() {
     console.warn('Both --force and --refresh set; --force wins (re-rendering all API posts).');
   }
 
-  console.log('Fetching posts from API...');
-  const strapiPosts = await fetchPosts({ baseUrl: apiUrl });
+  const syncCfg = getPostsSyncConfig({ baseUrl: apiUrl });
 
-  const existingBlogs = loadBlogsJson();
+  console.log('Fetching posts from API...');
+  let strapiPosts = await fetchPosts({ baseUrl: apiUrl });
+  strapiPosts = filterPostsForSite(strapiPosts, syncCfg.siteDomain);
+
+  let existingBlogs = loadBlogsJson();
+  const blogsBeforePrune = JSON.stringify(existingBlogs);
+  existingBlogs = pruneDisallowedBlogEntries(existingBlogs, syncCfg.siteDomain);
+  existingBlogs = sanitizeRelatedPosts(existingBlogs, syncCfg.siteDomain);
+  const blogsChangedByPrune = JSON.stringify(existingBlogs) !== blogsBeforePrune;
 
   let toProcess;
   let mode;
@@ -260,6 +337,11 @@ async function run() {
   }
 
   if (toProcess.length === 0) {
+    if (blogsChangedByPrune) {
+      saveBlogsJson(existingBlogs);
+      generateSitemap();
+      console.log('Removed off-site blog entries from blogs.json and sitemap.xml.');
+    }
     if (daily) {
       console.log('Daily sync: nothing to do (no synced posts to refresh and no new articles).');
     } else if (force) {

@@ -72,13 +72,15 @@ function buildSamplePostsUrl(cfg, page = 1) {
  * @returns {Promise<Array>} Normalised post objects
  */
 async function fetchPosts(opts = {}) {
-  const cfg = getPostsSyncConfig(opts);
+  const cfg = assertSiteFilterRequired(opts);
   const allPosts = [];
   let page = 1;
   const pageSize = 100;
 
-  if (!cfg.siteDomain && !cfg.skipFilter) {
+  if (!cfg.applySiteFilter && !cfg.skipFilter) {
     console.warn('fetch-posts: SITE_DOMAIN / site_domain not set; request is unfiltered by site.');
+  } else if (cfg.applySiteFilter) {
+    console.log(`fetch-posts: site filter active (${cfg.filterKey}=${cfg.siteDomain}).`);
   }
 
   const headers = {};
@@ -131,8 +133,34 @@ async function fetchPosts(opts = {}) {
   return allPosts;
 }
 
+/**
+ * Throws when SYNC_REQUIRE_SITE_FILTER is set but the posts request would be unfiltered.
+ * @param {object} [opts] - passed to getPostsSyncConfig()
+ * @returns {object} cfg
+ */
+function assertSiteFilterRequired(opts = {}) {
+  const cfg = getPostsSyncConfig(opts);
+  const requireFilter = /^1|true|yes$/i.test(String(process.env.SYNC_REQUIRE_SITE_FILTER || '').trim());
+  if (!requireFilter) return cfg;
+
+  if (cfg.skipFilter) {
+    throw new Error('SYNC_REQUIRE_SITE_FILTER is set but SKIP_POSTS_SITE_FILTER is enabled.');
+  }
+  if (!cfg.siteDomain) {
+    throw new Error('SYNC_REQUIRE_SITE_FILTER is set but SITE_DOMAIN is empty.');
+  }
+  if (!cfg.applySiteFilter) {
+    throw new Error(
+      'SYNC_REQUIRE_SITE_FILTER is set but the site filter is not applied. Check POSTS_SITE_FILTER_KEY.',
+    );
+  }
+
+  return cfg;
+}
+
 module.exports = {
   fetchPosts,
   getPostsSyncConfig,
   buildSamplePostsUrl,
+  assertSiteFilterRequired,
 };
