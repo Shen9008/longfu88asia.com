@@ -28,7 +28,7 @@ function getPostsSyncConfig(opts = {}) {
 
   const rawKey = process.env.POSTS_SITE_FILTER_KEY;
   let filterKey;
-  if (rawKey === undefined || rawKey === null) {
+  if (rawKey === undefined || rawKey === null || String(rawKey).trim() === '') {
     filterKey = DEFAULT_FILTER_KEY;
   } else {
     filterKey = String(rawKey).trim();

@@ -65,8 +65,7 @@ jobs:
           STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
           SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
           POSTS_COLLECTION: ${{ vars.STRAPI_COLLECTION }}
-          POSTS_SITE_FILTER_KEY: ${{ vars.POSTS_SITE_FILTER_KEY }}
-          SKIP_POSTS_SITE_FILTER: ${{ vars.SKIP_POSTS_SITE_FILTER }}
+          SYNC_REQUIRE_SITE_FILTER: "1"
 
       - name: Daily sync from Strapi
         run: npm run sync:daily
@@ -75,8 +74,6 @@ jobs:
           STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
           SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
           POSTS_COLLECTION: ${{ vars.STRAPI_COLLECTION }}
-          POSTS_SITE_FILTER_KEY: ${{ vars.POSTS_SITE_FILTER_KEY }}
-          SKIP_POSTS_SITE_FILTER: ${{ vars.SKIP_POSTS_SITE_FILTER }}
           PUBLIC_SITE_ORIGIN: ${{ vars.SITE_BASE_URL }}
           SYNC_REQUIRE_SITE_FILTER: "1"
 
