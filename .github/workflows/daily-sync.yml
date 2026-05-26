@@ -1,4 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# Daily blog sync: 1 new post + refresh changed synced posts (npm run sync:daily).
+# See update.md for sync modes and repository setup.
 name: Daily Sync
 
 on:
@@ -52,7 +54,7 @@ jobs:
       - name: Check site filter config
         run: |
           if [ -z "${SITE_DOMAIN:-}" ]; then
-            echo '::error::Configure repository variable SITE_DOMAIN (e.g. longfu88asia.com).'
+            echo '::error::Configure repository variable SITE_DOMAIN (e.g. example.com).'
             exit 1
           fi
           if [ "${SKIP_POSTS_SITE_FILTER:-}" = "1" ] || [ "${SKIP_POSTS_SITE_FILTER:-}" = "true" ] || [ "${SKIP_POSTS_SITE_FILTER:-}" = "yes" ]; then
@@ -67,7 +69,7 @@ jobs:
           POSTS_COLLECTION: ${{ vars.STRAPI_COLLECTION }}
           SYNC_REQUIRE_SITE_FILTER: "1"
 
-      - name: Daily sync from Strapi
+      - name: Daily sync (1 new + refresh changed)
         run: npm run sync:daily
         env:
           STRAPI_API_URL: ${{ secrets.STRAPI_API_URL }}

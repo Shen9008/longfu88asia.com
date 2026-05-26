@@ -223,8 +223,10 @@ function classifyPosts(strapiPosts, existingBySlug, opts) {
 }
 
 function buildDailyWorklist(strapiPosts, existingBlogs) {
+  const existingBySlug = new Map(existingBlogs.map((b) => [b.slug, b]));
   const existingSlugsAtStart = new Set(existingBlogs.map((b) => b.slug));
   const byPublishedAsc = (a, b) => new Date(a.publishedAt || 0) - new Date(b.publishedAt || 0);
+  const refreshOpts = { refresh: true };
 
   const creates = strapiPosts
     .filter((raw) => {
@@ -238,7 +240,8 @@ function buildDailyWorklist(strapiPosts, existingBlogs) {
   const updates = strapiPosts
     .filter((raw) => {
       const slug = getPostSlug(raw);
-      return slug && existingSlugsAtStart.has(slug);
+      if (!slug || !existingSlugsAtStart.has(slug)) return false;
+      return getSyncAction(raw, existingBySlug.get(slug), refreshOpts) === 'update';
     })
     .sort(byPublishedAsc)
     .map((raw) => ({ raw, slug: getPostSlug(raw), action: 'update' }));
@@ -330,7 +333,7 @@ async function run() {
   if (daily) {
     toProcess = buildDailyWorklist(strapiPosts, existingBlogs);
     if (limit != null) toProcess = toProcess.slice(0, limit);
-    mode = 'daily';
+    mode = 'daily (1 new + refresh changed)';
   } else {
     const existingBySlug = new Map(existingBlogs.map((b) => [b.slug, b]));
     const syncOpts = { all, refresh, force, limit };
@@ -346,7 +349,7 @@ async function run() {
       console.log('Removed off-site blog entries from blogs.json and sitemap.xml.');
     }
     if (daily) {
-      console.log('Daily sync: nothing to do (no synced posts to refresh and no new articles).');
+      console.log('Daily sync: nothing to do (no new articles and no changed articles to refresh).');
     } else if (force) {
       console.log('No published posts returned from API.');
     } else if (refresh) {
