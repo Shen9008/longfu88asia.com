@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-# Daily blog sync: 1 new post + refresh changed synced posts (npm run sync:daily).
-# See update.md for sync modes and repository setup.
+# Daily blog sync: 1 new post + refresh changed synced posts, then backfill same-site internal links.
+# API content includes cross-site links only; /blog/ links are injected locally (render + backfill).
 name: Daily Sync
 
 on:
@@ -78,6 +78,9 @@ jobs:
           POSTS_COLLECTION: ${{ vars.STRAPI_COLLECTION }}
           PUBLIC_SITE_ORIGIN: ${{ vars.SITE_BASE_URL }}
           SYNC_REQUIRE_SITE_FILTER: "1"
+
+      - name: Backfill internal links
+        run: npm run backfill
 
       - name: Commit synced content
         run: |

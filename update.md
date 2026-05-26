@@ -68,9 +68,14 @@ Two layers work together:
 | Cross-site (`https://other-domain.com/...`) | API `content` field |
 | Same-site (`/blog/{slug}.html`) | Local `injectInternalLinks` in `scripts/lib/render-article.js` |
 
-Local injection skips text already inside `<a>` tags, so API cross-site links are not overwritten.
+The API does **not** add same-site blog links. Local injection skips text already inside `<a>` tags, so API cross-site links are not overwritten.
 
-`npm run backfill` is **optional** when using `sync:daily`, because re-render already runs internal link injection. Backfill is still useful if you only add 1 new post without refreshing existing HTML.
+**Daily CI order:** `sync:daily` → `backfill` → commit → deploy.
+
+- **`sync:daily`** — 1 new post + re-render changed posts (cross-site links from API on those renders)
+- **`npm run backfill`** — adds same-site `/blog/` links to **unchanged** articles that were not re-rendered
+
+`backfill:force` is for one-off full re-injection; daily CI uses `backfill` only.
 
 ---
 
@@ -125,8 +130,9 @@ Daily flow:
 1. Validate Strapi secrets and `SITE_DOMAIN`
 2. `npm run sync:doctor` (with `SYNC_REQUIRE_SITE_FILTER=1`)
 3. `npm run sync:daily`
-4. Commit & push `assets/data/blogs.json`, `blog/`, `sitemap.xml` if changed
-5. Deploy to Cloudflare Pages
+4. `npm run backfill`
+5. Commit & push `assets/data/blogs.json`, `blog/`, `sitemap.xml` if changed
+6. Deploy to Cloudflare Pages
 
 ### Required repository variables
 
