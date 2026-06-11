@@ -47,7 +47,7 @@
             '<symbol id="icon-wallet" viewBox="0 0 24 24" fill="currentColor"><path d="M3 7h18v12H3V7zm2 2v8h14V9H5zm11 1h4v6h-4V10z"/></symbol>',
             '<symbol id="icon-globe" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 18.9A8 8 0 014.1 13H8a12 12 0 002 6.9zM4.1 11A8 8 0 0111 3.1a12 12 0 00-2 6.9H4.1zm2 0h4.8a14 14 0 012.1-7.2A8 8 0 006.1 11zm7.8 0H19a8 8 0 00-6.9-7.2A14 14 0 0113.9 11zm0 2a14 14 0 01-2.1 7.2A8 8 0 0019 13h-5.1z"/></symbol>',
             '<symbol id="icon-shield" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l8 4v6c0 5-3.4 9.5-8 10-4.6-.5-8-5-8-10V6l8-4z"/></symbol>',
-            '<symbol id="icon-gift" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.17A3 3 0 0017 4h-1a3 3 0 00-2.82 2H4v2h16V6zm-7-2a1 1 0 011 1v1h-2V5a1 1 0 011-1zm5 8v10H4V12h14z"/></symbol>',
+            '<symbol id="icon-gift" viewBox="0 0 24 24" fill="currentColor"><path d="M8 4h2v2H8V4zm6 0h2v2h-2V4zM11 3h2v3h-2V3zM4 7h16v2H4V7zM5 9v12h14V9H5zm6 0v12h2V9h-2zM4 13h16v2H4v-2z"/></symbol>',
             '<symbol id="icon-headset" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 00-7 7v4H4v6h3v-6H7V9a5 5 0 0110 0v4h-1v6h3v-6h-1V9a7 7 0 00-7-7z"/></symbol>',
             '<symbol id="icon-check" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></symbol>',
             '<symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/></symbol>',
