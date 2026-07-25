@@ -24,6 +24,25 @@
         return html;
     }
 
+    var SIGNUP_URLS = {
+        main: 'https://lngf.lynmonkel.com/?mid=360537_2218129',
+        'longfu88-malaysia': 'https://lngf.lynmonkel.com/?mid=360537_2218124',
+        'longfu88-singapore': 'https://lngf.lynmonkel.com/?mid=360537_2218128',
+        'longfu88-thailand': 'https://lngf.lynmonkel.com/?mid=360537_2218127',
+        'longfu88-indonesia': 'https://lngf.lynmonkel.com/?mid=360537_2218126',
+        'longfu88-vietnam': 'https://lngf.lynmonkel.com/?mid=360537_2218125'
+    };
+
+    function applySignupLinks(root) {
+        var page = document.body.getAttribute('data-page') || '';
+        var url = SIGNUP_URLS[page] || SIGNUP_URLS.main;
+        (root || document).querySelectorAll('[data-signup-link]').forEach(function (el) {
+            el.setAttribute('href', url);
+            el.setAttribute('target', '_blank');
+            el.setAttribute('rel', 'noopener noreferrer sponsored');
+        });
+    }
+
     function setActiveNav() {
         var page = document.body.getAttribute('data-page') || '';
         if (!page) return;
@@ -71,6 +90,7 @@
 
     function run() {
         injectSprite();
+        applySignupLinks(document);
         Promise.all([
             fetch('/partials/header.html').then(function (r) { return r.text(); }),
             fetch('/partials/footer.html').then(function (r) { return r.text(); })
@@ -88,13 +108,17 @@
             }
             if (footerPh) footerPh.outerHTML = footerHtml;
             setActiveNav();
+            applySignupLinks(document);
             document.dispatchEvent(new CustomEvent('lf88-partials-ready'));
 
             var main = document.getElementById('main-content');
             if (main) {
                 fetch('/partials/cta-banner.html').then(function (r) { return r.text(); }).then(function (html) {
                     var first = main.querySelector('section');
-                    if (first) first.insertAdjacentHTML('afterend', rewriteLinks(html));
+                    if (first) {
+                        first.insertAdjacentHTML('afterend', rewriteLinks(html));
+                        applySignupLinks(main);
+                    }
                 }).catch(function () {});
 
                 var explorePartial = document.body.getAttribute('data-explore-partial');
