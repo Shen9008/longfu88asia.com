@@ -14,7 +14,7 @@
     function rewriteLinks(html) {
         var isSub = rewriteBase === '../';
         if (!isSub) return html;
-        var rootPages = ['index.html', 'slots.html', 'live-casino.html', 'sports-betting.html', 'promotions.html', 'payments.html', 'licensing.html', 'about.html', 'responsible-gambling.html', 'help.html', 'terms.html', 'privacy.html', 'longfu88-malaysia.html', 'longfu88-vietnam.html', 'longfu88-indonesia.html', 'longfu88-thailand.html', 'longfu88-singapore.html', 'blog/index.html'];
+        var rootPages = ['index.html', 'live-casino.html', 'sports-betting.html', 'promotions.html', 'payments.html', 'licensing.html', 'about.html', 'responsible-gambling.html', 'help.html', 'terms.html', 'privacy.html', 'longfu88-malaysia.html', 'longfu88-vietnam.html', 'longfu88-indonesia.html', 'blog/index.html'];
         html = html.replace(/\shref="(?!https?:\/\/|#|mailto:|\.\.\/)([^"]+)"/g, function (_, href) {
             var hrefBase = href.split('#')[0];
             if (rootPages.indexOf(hrefBase) !== -1) return ' href="../' + href + '"';
@@ -27,8 +27,6 @@
     var SIGNUP_URLS = {
         main: 'https://lngf.lynmonkel.com/?mid=360537_2218129',
         'longfu88-malaysia': 'https://lngf.lynmonkel.com/?mid=360537_2218124',
-        'longfu88-singapore': 'https://lngf.lynmonkel.com/?mid=360537_2218128',
-        'longfu88-thailand': 'https://lngf.lynmonkel.com/?mid=360537_2218127',
         'longfu88-indonesia': 'https://lngf.lynmonkel.com/?mid=360537_2218126',
         'longfu88-vietnam': 'https://lngf.lynmonkel.com/?mid=360537_2218125'
     };

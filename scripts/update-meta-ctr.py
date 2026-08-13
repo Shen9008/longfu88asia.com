@@ -19,10 +19,6 @@ PAGES = {
         "title": "LongFu88 Review 2026 | 1,480+ Games, Sportsbook &amp; 200% Bonus",
         "description": "LongFu88 honest review: 1,480+ games, Lightning Baccarat, 38 sports &amp; Asian handicap, 200% welcome bonus up to $1,500, 16 payment methods. Written for Asian players. 18+ only.",
     },
-    "slots.html": {
-        "title": "LongFu88 Slots 2026 | 920+ Games, RTP Guide &amp; Top Picks",
-        "description": "LongFu88 slots guide: 920+ games from 62+ studios, RTP comparison table, Megaways, jackpots, bonus-buy &amp; Asian-themed titles. Expert picks for APAC players. 18+ only.",
-    },
     "promotions.html": {
         "title": "LongFu88 Bonus 2026 | 200% Welcome + VIP Cashback Guide",
         "description": "LongFu88 bonus guide: 200% up to $1,500 + 60 free spins, wagering requirement analysis, VIP 10% cashback, missions &amp; coin shop. Read terms before claiming. 18+ only.",
@@ -51,14 +47,6 @@ PAGES = {
     "longfu88-indonesia.html": {
         "title": "LongFu88 Indonesia 2026 | IDR Casino &amp; Sports Guide",
         "description": "LongFu88 Indonesia guide: 1,480+ games, 38 sports, IDR-friendly deposits, slots and live casino reviewed for Indonesian players. 18+ only.",
-    },
-    "longfu88-singapore.html": {
-        "title": "LongFu88 Singapore 2026 | SGD Casino &amp; Sports Guide",
-        "description": "LongFu88 Singapore guide: SGD-friendly slots, live casino and sports betting, plus payments and safer-play tips. Verify local rules. 18+.",
-    },
-    "longfu88-thailand.html": {
-        "title": "LongFu88 Thailand 2026 | Casino &amp; Sports Betting Guide",
-        "description": "LongFu88 Thailand guide: 1,480+ games, 38 sports, live casino and slots reviewed for Thai players, plus payments and safer-play tips. 18+.",
     },
     "longfu88-vietnam.html": {
         "title": "LongFu88 Vietnam 2026 | VND Casino &amp; Esports Guide",
