@@ -10,9 +10,9 @@
     --lf-border: rgba(255, 255, 255, 0.09);
     --lf-border-neon: rgba(255, 59, 59, 0.45);
     --lf-text: #f1f5f9;
-    --lf-reading: #cbd5e1;
-    --lf-muted: #94a3b8;
-    --lf-subtle: #64748b;
+    --lf-reading: #d8dee9;
+    --lf-muted: #a8b4c4;
+    --lf-subtle: #8b97a8;
     --lf-link: #fca5a5;
     --lf-link-hover: #ff6b6b;
     --lf-red-bright: #ff3b3b;
@@ -493,4 +493,110 @@ body.lf-cursor-active .fx-cursor-glow {
 
 @media (hover: none), (pointer: coarse) {
     .fx-cursor-glow { display: none !important; }
+}
+
+/* Contrast — main.css still ships light surfaces; keep dark cards + readable text */
+.hero--home .hero__panel {
+    background: var(--lf-card);
+    border-color: rgba(255, 59, 59, 0.2);
+    box-shadow: var(--lf-shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.hero--home .hero__panel-title {
+    color: var(--lf-red-bright);
+}
+
+.hero--home .stat-pill {
+    background: var(--lf-card);
+    border-color: var(--lf-border);
+    box-shadow: var(--lf-shadow);
+}
+
+.section--alt,
+.section--muted {
+    background: linear-gradient(180deg, rgba(255, 59, 59, 0.04) 0%, transparent 50%, rgba(255, 59, 59, 0.03) 100%);
+    border-color: var(--lf-border);
+}
+
+.prose-card,
+.listicle__item,
+.steps-flow,
+.step-node {
+    background: var(--lf-card);
+    border-color: var(--lf-border);
+    box-shadow: var(--lf-shadow);
+}
+
+.step-node:not(:last-child)::after {
+    background-color: var(--lf-bg-elevated);
+    border-color: rgba(255, 59, 59, 0.25);
+}
+
+.step-node__glyph {
+    background: linear-gradient(145deg, rgba(255, 59, 59, 0.15) 0%, rgba(18, 18, 28, 0.9) 100%);
+    border-color: rgba(255, 59, 59, 0.25);
+}
+
+.footer {
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 59, 59, 0.04) 30%, #06060b 100%);
+    color: var(--lf-text);
+}
+
+.data-table thead th {
+    background: rgba(255, 59, 59, 0.1);
+    color: var(--lf-text);
+    border-bottom-color: rgba(255, 59, 59, 0.25);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.data-table tbody tr:hover {
+    background: rgba(255, 59, 59, 0.08);
+}
+
+.data-table th,
+.data-table td {
+    border-color: var(--lf-border);
+}
+
+.blog-article-hero--editorial {
+    background: linear-gradient(180deg, rgba(255, 59, 59, 0.06) 0%, transparent 55%, rgba(6, 6, 11, 0.45) 100%);
+}
+
+.blog-inline-cta__inner {
+    background: linear-gradient(135deg, rgba(255, 59, 59, 0.1) 0%, rgba(14, 14, 22, 0.95) 42%, rgba(14, 14, 22, 0.98) 100%);
+    border-color: rgba(255, 59, 59, 0.3);
+    box-shadow: var(--lf-glow), var(--lf-shadow-md);
+}
+
+.blog-pagination__nav-btn {
+    background: var(--lf-card);
+    border-color: var(--lf-border);
+    color: var(--lf-link);
+}
+
+.blog-pagination__nav-btn:hover {
+    background: rgba(255, 59, 59, 0.12);
+    border-color: rgba(255, 59, 59, 0.4);
+    color: var(--lf-link-hover);
+}
+
+.blog-share__chip {
+    background: var(--lf-card);
+    border-color: var(--lf-border);
+}
+
+.blog-share__chip:hover {
+    background: rgba(255, 59, 59, 0.12);
+    border-color: rgba(255, 59, 59, 0.35);
+}
+
+.blog-related-list a {
+    background: var(--lf-card);
+}
+
+.explore-section--promo {
+    background: linear-gradient(180deg, rgba(255, 59, 59, 0.04) 0%, transparent 100%);
 }
