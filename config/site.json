@@ -2,6 +2,11 @@
   "brand": "LongFu88 Asia",
   "domain": "https://longfu88asia.com",
   "tagline": "Casino, live dealers & Asian sports—one refined login",
+  "indexNow": {
+    "key": "715f4dd7a5ea1ab749fc17fe720b78ff",
+    "host": "longfu88asia.com",
+    "keyLocation": "https://longfu88asia.com/715f4dd7a5ea1ab749fc17fe720b78ff.txt"
+  },
   "stats": {
     "totalGames": "1,480+",
     "gameCategories": "14",

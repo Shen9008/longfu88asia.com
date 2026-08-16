@@ -12,6 +12,7 @@
     "backfill": "node scripts/backfill-internal-links.js",
     "backfill:force": "node scripts/backfill-internal-links.js --force",
     "audit:links": "node scripts/audit-internal-links.js",
+    "indexnow:submit": "node scripts/submit-indexnow.js",
     "deploy": "wrangler pages deploy . --project-name=longfu88asia"
   },
   "devDependencies": {
