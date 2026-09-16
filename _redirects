@@ -1,0 +1,18 @@
+# 301 redirects for pages removed in "Remove Singapore, Thailand, and slots pages"
+# (commit 6e21890, 2026-08-10). Without this file, Cloudflare Pages was silently
+# falling back to serving the homepage at these URLs with a canonical tag pointing
+# to /, which reads to Google as a soft-404 / duplicate-content signal rather than
+# a clean permanent move - these three URLs are still indexed with their old,
+# page-specific titles. Added 2026-09-13.
+/longfu88-singapore / 301
+/longfu88-singapore.html / 301
+/longfu88-thailand / 301
+/longfu88-thailand.html / 301
+/slots / 301
+/slots.html / 301
+
+# Canonical URL hygiene (Cloudflare Pages strips .html via 308; keep one hop)
+/index.html / 301
+
+# Prefer non-www
+https://www.longfu88asia.com/* https://longfu88asia.com/:splat 301

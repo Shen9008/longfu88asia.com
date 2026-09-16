@@ -17,7 +17,7 @@ PAGES = {
     # ---- Homepage & core product pages ----
     "index.html": {
         "title": "LongFu88 Review 2026 | 1,480+ Games, Sportsbook &amp; 200% Bonus",
-        "description": "LongFu88 honest review: 1,480+ games, Lightning Baccarat, 38 sports &amp; Asian handicap, 200% welcome bonus up to $1,500, 16 payment methods. Written for Asian players. 18+ only.",
+        "description": "LongFu88 review: 1,480+ games, live baccarat, 38 sports, 200% bonus up to $1,500, 16 payment methods. Independent guide for Asian players. 18+ only.",
     },
     "promotions.html": {
         "title": "LongFu88 Bonus 2026 | 200% Welcome + VIP Cashback Guide",
@@ -42,7 +42,7 @@ PAGES = {
     # ---- Regional hub pages ----
     "longfu88-malaysia.html": {
         "title": "LongFu88 Malaysia 2026 | MYR Casino, Slots &amp; Sports Guide",
-        "description": "LongFu88 Malaysia guide: 1,480+ games, 38 sports, MYR deposits via FPX &amp; e-wallets, slots and live baccarat reviewed for local players. 18+.",
+        "description": "LongFu88 Malaysia guide: 1,480+ games, 38 sports, MYR deposits via FPX and e-wallets, slots and live baccarat for local players. 18+.",
     },
     "longfu88-indonesia.html": {
         "title": "LongFu88 Indonesia 2026 | IDR Casino &amp; Sports Guide",
@@ -50,7 +50,7 @@ PAGES = {
     },
     "longfu88-vietnam.html": {
         "title": "LongFu88 Vietnam 2026 | VND Casino &amp; Esports Guide",
-        "description": "LongFu88 Vietnam guide: 1,480+ games, 38 sports plus esports, VND-friendly payments, slots and live casino for Vietnamese players. 18+.",
+        "description": "LongFu88 Vietnam guide: 1,480+ games, esports markets, VND-friendly payments, slots and live casino for Vietnamese players. 18+.",
     },
     # ---- Trim overly long titles on core pages for cleaner SERP display ----
     "about.html": {
@@ -59,7 +59,7 @@ PAGES = {
     },
     "live-casino.html": {
         "title": "LongFu88 Live Casino 2026 | Baccarat &amp; Blackjack Strategy",
-        "description": "LongFu88 live casino expert guide: 240+ tables, house edge by game, baccarat strategy (1.06% Banker edge), blackjack basic strategy, Evolution Gaming streams. 18+ only.",
+        "description": "LongFu88 live casino guide: 240+ tables, house edge by game, baccarat and blackjack strategy, Evolution streams. Expert tips for Asian players. 18+ only.",
     },
     "licensing.html": {
         "title": "LongFu88 Licensing, RNG &amp; Trust | Certifications Explained",
@@ -71,7 +71,7 @@ PAGES = {
     },
     "sports-betting.html": {
         "title": "LongFu88 Sportsbook 2026 | Asian Handicap &amp; 38 Sports",
-        "description": "LongFu88 sports betting guide: Asian handicap explained, 38 sports, 480+ leagues, esports markets, in-play discipline, and bankroll management for Asian players. 18+ only.",
+        "description": "LongFu88 sports betting guide: Asian handicap, 38 sports, 480+ leagues, esports markets, and bankroll tips for Asian players. 18+ only.",
     },
     # ---- Blog index ----
     "blog/index.html": {

@@ -4,3 +4,6 @@ Allow: /
 
 # Sitemap
 Sitemap: https://longfu88asia.com/sitemap.xml
+
+# AI / LLM context
+# https://longfu88asia.com/llms.txt

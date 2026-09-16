@@ -51,9 +51,9 @@ function generateSitemap(opts = {}) {
   const blogUrls = blogs.map((b) => {
     const slug = b.slug || '';
     const lastmod = b.published_date || '2025-01-01';
-    // SEO / static hosts: pages live at blog/{slug}.html; sitemap <loc> must match on-disk routes.
+    // Cloudflare Pages serves extensionless URLs (308 from .html); sitemap uses canonical paths.
     return `  <url>
-    <loc>${publicSiteOrigin()}/blog/${slug}.html</loc>
+    <loc>${publicSiteOrigin()}/blog/${slug}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
