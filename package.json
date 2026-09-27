@@ -13,12 +13,15 @@
     "backfill:force": "node scripts/backfill-internal-links.js --force",
     "audit:links": "node scripts/audit-internal-links.js",
     "indexnow:submit": "node scripts/submit-indexnow.js",
+    "sitemap:refresh": "node scripts/refresh-sitemap-lastmod.mjs",
+    "search:ping": "node scripts/ping-search-engines.mjs",
+    "search:recover": "node scripts/refresh-sitemap-lastmod.mjs && node scripts/ping-search-engines.mjs && node scripts/submit-indexnow.js",
     "deploy": "wrangler pages deploy . --project-name=longfu88asia"
   },
   "devDependencies": {
     "dotenv": "^16.4.7",
     "serve": "^14.2.4",
     "sharp": "^0.33.5",
-    "wrangler": "^4.132.0"
+    "wrangler": "^4.134.0"
   }
 }

@@ -2,8 +2,16 @@
 User-agent: *
 Allow: /
 
-# Sitemap
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap (resubmit in GSC after deploy if impressions drop)
 Sitemap: https://longfu88asia.com/sitemap.xml
 
-# AI / LLM context
-# https://longfu88asia.com/llms.txt
+# AI / LLM context: https://longfu88asia.com/llms.txt
